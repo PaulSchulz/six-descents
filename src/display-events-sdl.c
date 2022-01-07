@@ -43,12 +43,12 @@ stopWatch s;
 TTF_Font* Sans = NULL;
 TTF_Font* Font = NULL;
 
-// Data
+// Database
+#define EVENTSDB "/home/pi/Documents/git/six-descents-data/events.db"
+sqlite3 *db;
 int channel[6];
 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 /* returns a number between 1 and max */
 int Random(int max) {
   return (rand() % max) + 1;
@@ -65,7 +65,23 @@ void SetCaption(char* msg) {
 }
 
 /* Initialize all setup, set screen mode, load images etc */
-void InitSetup() {
+int InitSetup() {
+  // Database
+  int rc = sqlite3_open(EVENTSDB, &db);
+    
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+    sqlite3_close(db);
+        
+    return 1;
+  }
+
+  // Data
+  for(int i=0; i<6; i++) {
+    channel[i] = 0;
+  }
+  
+  // Seed random number generator
   srand((int)time(NULL));
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, SDL_WINDOW_SHOWN, &screen, &renderer);
@@ -88,14 +104,21 @@ void InitSetup() {
   }
 
   SetCaption("Example One");
+
+  return 0;
 }
 
 /* Cleans up after game over */
 void FinishOff() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(screen);
+
   //Quit SDL
   SDL_Quit();
+
+  // Close Database
+  sqlite3_close(db);
+      
   exit(0);
 }
 
@@ -112,8 +135,29 @@ char getaChar() {
   }
   return result;
 }
+///////////////////////////////////////////////////////////////////////////////////
+void DrawString (char* buffer, int x, int y) {
 
-void DrawText() {
+  SDL_Color    White = {255, 255, 255};
+  SDL_Surface* surfaceMessage = NULL;
+  SDL_Texture* Message = NULL;
+  SDL_Rect     Message_rect; //create a rect
+
+  surfaceMessage = TTF_RenderText_Solid(Sans, buffer, White); 
+  Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+  Message_rect.x = x; 
+  Message_rect.y = y; 
+  Message_rect.w = surfaceMessage->w;
+  Message_rect.h = surfaceMessage->h;
+  SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
+  SDL_FreeSurface(surfaceMessage);
+  SDL_DestroyTexture(Message);
+
+}
+
+
+void DrawScreen () {
+
   char buff[20];
 
   int background = false;
@@ -126,71 +170,61 @@ void DrawText() {
     rect.x = Random(WIDTH - rect.w - 1);
     SDL_RenderFillRect(renderer, &rect);
   }
+
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+  SDL_RenderFillRect(renderer, NULL);
   
-  char message_buff[100];
-  //
-  SDL_Color    White = {255, 255, 255};
-  SDL_Surface* surfaceMessage = NULL;
-  SDL_Texture* Message = NULL;
-  SDL_Rect     Message_rect; //create a rect
+  // Get Data
+  printf("DEBUG: get data\n");
+  sqlite3_stmt *res;
+  int data_ok = false;
+  int rc = sqlite3_prepare_v2(db,
+			      "SELECT channel, count from totals",
+			      -1, &res, NULL);
 
-  snprintf(message_buff, sizeof(message_buff), "%s", "Total:");
-  surfaceMessage = TTF_RenderText_Solid(Sans, message_buff, White); 
-  Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-  Message_rect.x = 20; 
-  Message_rect.y = 20; 
-  Message_rect.w = surfaceMessage->w;
-  Message_rect.h = surfaceMessage->h;
-  SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-  SDL_FreeSurface(surfaceMessage);
-  SDL_DestroyTexture(Message);
-
-  snprintf(message_buff, sizeof(message_buff), "%08d", 0);
-  surfaceMessage = TTF_RenderText_Solid(Sans, message_buff, White); 
-  Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-  Message_rect.x = 400;
-  Message_rect.y = 20; 
-  Message_rect.w = surfaceMessage->w;
-  Message_rect.h = surfaceMessage->h;
-  SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-  SDL_FreeSurface(surfaceMessage);
-  SDL_DestroyTexture(Message);
-
-  for (int i=0; i<3; i++) {
+  if (rc == SQLITE_OK) {                                                            
+    while (sqlite3_step(res) == SQLITE_ROW) {
+        channel[sqlite3_column_int(res, 0) - 1] = sqlite3_column_int(res, 1);
+    }
     
-    snprintf(message_buff, sizeof(message_buff), "%07d", 0);
-    surfaceMessage = TTF_RenderText_Solid(Sans, message_buff, White); 
-    Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-    Message_rect.x = 20; 
-    Message_rect.y = 200 + i*100;
-    Message_rect.w = surfaceMessage->w;
-    Message_rect.h = surfaceMessage->h;
-    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-    SDL_FreeSurface(surfaceMessage);
-    SDL_DestroyTexture(Message);
-
-    snprintf(message_buff, sizeof(message_buff), "%07d", 0);
-    surfaceMessage = TTF_RenderText_Solid(Sans, message_buff, White); 
-    Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-    Message_rect.x = 520;   
-    Message_rect.y = 200 + i*100;
-    Message_rect.w = surfaceMessage->w;
-    Message_rect.h = surfaceMessage->h;
-    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-    SDL_FreeSurface(surfaceMessage);
-    SDL_DestroyTexture(Message);
-    
+    data_ok = true;
   }
+  sqlite3_finalize(res); 
+  printf("DEBUG: get data(end)\n");
   
-  rectCount++;
-  if (rectCount % 100 == 0) {
+  // Display Data
+  if (data_ok == true) {
+
+    int total = 0;
+    for(int i=0; i<6; i++) {
+      total = total + channel[i];
+    }       
+
+    char message_buff[100];
+    SDL_Color    White = {255, 255, 255};
+    SDL_Surface* surfaceMessage = NULL;
+    SDL_Texture* Message = NULL;
+    SDL_Rect     Message_rect; //create a rect
+
+    snprintf(message_buff, sizeof(message_buff), "%s", "Total:");
+    DrawString (message_buff, 40, 20);
+
+    snprintf(message_buff, sizeof(message_buff), "%08d", total);
+    DrawString (message_buff, 460, 20);
+    
+    for (int i=0; i<3; i++) {
+     
+      snprintf(message_buff, sizeof(message_buff), "%07d", channel[i]);
+      DrawString (message_buff, 40, 200 + i*100);
+
+      snprintf(message_buff, sizeof(message_buff), "%07d", channel[i+3]);
+      DrawString (message_buff, 520, 200 + i*100);
+    }
+  
     SDL_RenderPresent(renderer);
-    stopTimer(&s);
-    snprintf(buff, sizeof(buff),"%10.6f",diff(&s));
-    SetCaption(buff);
-    startTimer(&s);
   }
 }
+
 
 /* main game loop. Handles demo mode, high score and game play */
 void GameLoop() {
@@ -198,7 +232,7 @@ void GameLoop() {
   startTimer(&s);
   while (gameRunning)
     {
-      DrawText();
+      DrawScreen();
       
       while (SDL_PollEvent(&event)) {
 	switch (event.type) {
