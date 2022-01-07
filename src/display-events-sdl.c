@@ -50,23 +50,24 @@ int channel[6];
 
 ////////////////////////////////////////////////////////////////////////////////////
 /* returns a number between 1 and max */
-int Random(int max) {
+int Random (int max) {
   return (rand() % max) + 1;
 }
 
-void LogError(char* msg) {
+void LogError (char* msg) {
   printf("%s\n", msg);
   errorCount++;
 }
 
 /* Sets Window caption according to state - eg in debug mode or showing fps */
-void SetCaption(char* msg) {
+void SetCaption (char* msg) {
   SDL_SetWindowTitle(screen, msg);
 }
 
 /* Initialize all setup, set screen mode, load images etc */
-int InitSetup() {
-  // Database
+int InitSetup (void) {
+  
+  // Database Initialisation
   int rc = sqlite3_open(EVENTSDB, &db);
     
   if (rc != SQLITE_OK) {
@@ -76,11 +77,12 @@ int InitSetup() {
     return 1;
   }
 
-  // Data
+  // Data Initialisation
   for(int i=0; i<6; i++) {
     channel[i] = 0;
   }
-  
+
+  // SDL and Graphics Initialisation
   // Seed random number generator
   srand((int)time(NULL));
   SDL_Init(SDL_INIT_EVERYTHING);
@@ -95,6 +97,9 @@ int InitSetup() {
     exit(2);
   }
 
+  // Hide Mouse
+  SDL_ShowCursor(SDL_DISABLE);
+  
   // Opens a font style and sets a size
   Sans = TTF_OpenFont(FONT, 100);
 
@@ -215,10 +220,10 @@ void DrawScreen () {
     for (int i=0; i<3; i++) {
      
       snprintf(message_buff, sizeof(message_buff), "%07d", channel[i]);
-      DrawString (message_buff, 40, 200 + i*100);
+      DrawString (message_buff, 40, 180 + i*100);
 
       snprintf(message_buff, sizeof(message_buff), "%07d", channel[i+3]);
-      DrawString (message_buff, 520, 200 + i*100);
+      DrawString (message_buff, 520, 180 + i*100);
     }
   
     SDL_RenderPresent(renderer);
@@ -230,37 +235,33 @@ void DrawScreen () {
 void GameLoop() {
   int gameRunning = 1;
   startTimer(&s);
-  while (gameRunning)
-    {
-      DrawScreen();
+  while (gameRunning) {
+    DrawScreen();
       
-      while (SDL_PollEvent(&event)) {
-	switch (event.type) {
-	case SDL_KEYDOWN:
-	  keypressed = event.key.keysym.sym;
-	  if (keypressed == QUITKEY)
-	    {
-	      gameRunning = 0;
-	      break;
-	    }
-	  
+    while (SDL_PollEvent(&event)) {
+      switch (event.type) {
+      case SDL_KEYDOWN:
+	keypressed = event.key.keysym.sym;
+	if (keypressed == QUITKEY) {
+	  gameRunning = 0;
 	  break;
-	case SDL_QUIT: /* if mouse click to close window */
-	  {
-	    gameRunning = 0;
-	    break;
-	  }
-	case SDL_KEYUP: {
+	}	  
+	break;
+      case SDL_QUIT: /* if mouse click to close window */
+	{
+	  gameRunning = 0;
 	  break;
 	}
-	} /* switch */
-	
-      } /* while SDL_PollEvent */
-    }
+      case SDL_KEYUP: {
+	break;
+      }
+      } /* switch */
+      
+    } /* while SDL_PollEvent */
+  }
 }
 
-int main(int argc, char* args[])
-{
+int main(int argc, char* args[]) {
   InitSetup();
   GameLoop();
   FinishOff();
