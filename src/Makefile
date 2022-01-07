@@ -1,6 +1,9 @@
 .phony: all clean
 
-all: display-events version version2
+all: display-events-sdl display-events version version2 sdltest
+
+display-events-sdl: display-events-sdl.c
+	gcc -o $@ $< -lsqlite3
 
 display-events: display-events.c
 	gcc -o $@ $< -lsqlite3
@@ -11,5 +14,8 @@ version: version.c
 version2: version2.c
 	gcc -o version2 version2.c -lsqlite3
 
+sdltest: sdltest.c hr_time.c
+	gcc -o sdltest hr_time.c sdltest.c -lSDL2
+
 clean:
-	-rm display-events version version2
+	-rm display-events-sdl display-events version version2 sdltest
