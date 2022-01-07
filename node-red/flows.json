@@ -1,0 +1,762 @@
+[
+    {
+        "id": "17e9dc09d599478d",
+        "type": "tab",
+        "label": "Events",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "82a099940d4062fd",
+        "type": "sqlitedb",
+        "db": "/home/pi/Documents/git/six-descents-data/events.db",
+        "mode": "RWC"
+    },
+    {
+        "id": "4953ef8426cad350",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "channel 1 gpio/5",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "7",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "gpio/5",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 230,
+        "y": 160,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "ec942d16c3b813fa",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "channel 2 gpio/6",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "9",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "gpio/6",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 230,
+        "y": 260,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "395b119d881dc8e0",
+        "type": "rpi-gpio in",
+        "z": "17e9dc09d599478d",
+        "name": "channel 1 gpio/5",
+        "pin": "5",
+        "intype": "tri",
+        "debounce": "25",
+        "read": false,
+        "bcm": true,
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "98396ae46bc573c4",
+        "type": "sqlite",
+        "z": "17e9dc09d599478d",
+        "mydb": "82a099940d4062fd",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "events.db",
+        "x": 1060,
+        "y": 420,
+        "wires": [
+            [
+                "cef1036867c6bc8e"
+            ]
+        ]
+    },
+    {
+        "id": "161145392fb22144",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "query events",
+        "func": "\nmsg.topic = \"select * from events;\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 260,
+        "wires": [
+            [
+                "98396ae46bc573c4",
+                "cd8e4fc03ff29d95"
+            ]
+        ]
+    },
+    {
+        "id": "cef1036867c6bc8e",
+        "type": "debug",
+        "z": "17e9dc09d599478d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "014ffdb40dc17def",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload.channel",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "event",
+        "x": 490,
+        "y": 260,
+        "wires": [
+            [
+                "161145392fb22144"
+            ]
+        ]
+    },
+    {
+        "id": "beced86c6c763a28",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "channel event",
+        "func": "var channel = msg.payload.channel;\n\nvar topic = \"\"\ntopic = \"INSERT into events (timestamp, channel) \"\ntopic += \"VALUES \"\ntopic += \"  (strftime('%Y-%m-%d %H:%M:%f','now'), \" \ntopic += channel\ntopic += \"); \"\n\nmsg.topic = topic;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 420,
+        "wires": [
+            [
+                "98396ae46bc573c4"
+            ]
+        ]
+    },
+    {
+        "id": "cd8e4fc03ff29d95",
+        "type": "debug",
+        "z": "17e9dc09d599478d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "19eef5c594b976bb",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "query totals",
+        "func": "\nmsg.topic = \"select * from totals;\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 300,
+        "wires": [
+            [
+                "98396ae46bc573c4",
+                "cd8e4fc03ff29d95"
+            ]
+        ]
+    },
+    {
+        "id": "ee4d27b5f8cdf96c",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload.channel",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "event",
+        "x": 490,
+        "y": 300,
+        "wires": [
+            [
+                "19eef5c594b976bb"
+            ]
+        ]
+    },
+    {
+        "id": "05badddd2bc2719b",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload.channel",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "event",
+        "x": 490,
+        "y": 340,
+        "wires": [
+            [
+                "2bafbc5389f8ca35"
+            ]
+        ]
+    },
+    {
+        "id": "2bafbc5389f8ca35",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "calculate totals",
+        "func": "var topic = \"\"\n\ntopic = \"select channel,count(*) as count \"\ntopic += \"from events \"\ntopic += \"group by channel;\";\n\nmsg.topic = topic;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 340,
+        "wires": [
+            [
+                "98396ae46bc573c4",
+                "cd8e4fc03ff29d95"
+            ]
+        ]
+    },
+    {
+        "id": "1c9ebdba41000f83",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload.channel",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "event",
+        "x": 490,
+        "y": 100,
+        "wires": [
+            [
+                "d219bd471bbda27c"
+            ]
+        ]
+    },
+    {
+        "id": "d219bd471bbda27c",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "delete all events",
+        "func": "\nmsg.topic = \"delete from events;\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 100,
+        "wires": [
+            [
+                "98396ae46bc573c4",
+                "cd8e4fc03ff29d95"
+            ]
+        ]
+    },
+    {
+        "id": "ba7df2792fac42c6",
+        "type": "rpi-gpio in",
+        "z": "17e9dc09d599478d",
+        "name": "channel 2 gpio/6",
+        "pin": "6",
+        "intype": "tri",
+        "debounce": "25",
+        "read": true,
+        "bcm": true,
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "72edc34b21a6ef17",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "channel map",
+        "func": "var channel = 0;\n\nswitch(msg.topic) {\n  case \"gpio/5\":\n    channel = 1;\n    break;\n  case \"gpio/6\":\n    channel = 2;\n    break;\n  case \"gpio/13\":\n    channel = 3;\n    break;\n  case \"gpio/19\":\n    channel = 4;\n    break;\n  case \"gpio/26\":\n    channel = 5;\n    break;\n  case \"gpio/12\":\n    channel = 6;\n    break;\n  default:\n    // code block\n}\n\nif (channel == 0) {\n    msg = NULL;\n} else {\n  msg.payload = {\"channel\": channel}\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 420,
+        "wires": [
+            [
+                "7acd52bccd17bf40",
+                "beced86c6c763a28",
+                "7ee3581112321f4c"
+            ]
+        ]
+    },
+    {
+        "id": "efda65f56305041b",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "channel 3 gpio/13",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "13",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "gpio/13",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 220,
+        "y": 360,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "065773e0a6137f28",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "channel 4 gpio/19",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "17",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "gpio/19",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 220,
+        "y": 460,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "bdad1f82cf2f4568",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "channel 5 gpio/26",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "11",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "gpio/26",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 220,
+        "y": 560,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "a7226c763e338a97",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "channel 6 gpio/12",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "13",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "gpio/12",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 220,
+        "y": 660,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "7acd52bccd17bf40",
+        "type": "debug",
+        "z": "17e9dc09d599478d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "e061d6a3e074c0f7",
+        "type": "rpi-gpio in",
+        "z": "17e9dc09d599478d",
+        "name": "channel 3 gpio/13",
+        "pin": "13",
+        "intype": "tri",
+        "debounce": "25",
+        "read": false,
+        "bcm": true,
+        "x": 210,
+        "y": 400,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "0fa600589eee7ec8",
+        "type": "rpi-gpio in",
+        "z": "17e9dc09d599478d",
+        "name": "channel 4 gpio/19",
+        "pin": "19",
+        "intype": "tri",
+        "debounce": "25",
+        "read": false,
+        "bcm": true,
+        "x": 210,
+        "y": 500,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "0fd9d108d2f13ee9",
+        "type": "rpi-gpio in",
+        "z": "17e9dc09d599478d",
+        "name": "channel 5 gpio/26",
+        "pin": "26",
+        "intype": "tri",
+        "debounce": "25",
+        "read": false,
+        "bcm": true,
+        "x": 210,
+        "y": 600,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "b6831c94e9bb6d20",
+        "type": "rpi-gpio in",
+        "z": "17e9dc09d599478d",
+        "name": "channel 6 gpio/12",
+        "pin": "12",
+        "intype": "tri",
+        "debounce": "25",
+        "read": false,
+        "bcm": true,
+        "x": 210,
+        "y": 700,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "8f531d31ed031533",
+        "type": "switch",
+        "z": "17e9dc09d599478d",
+        "name": "filter / on event",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 500,
+        "y": 420,
+        "wires": [
+            [
+                "72edc34b21a6ef17"
+            ]
+        ]
+    },
+    {
+        "id": "006b7d79b4780c56",
+        "type": "comment",
+        "z": "17e9dc09d599478d",
+        "name": "Input Channels",
+        "info": "",
+        "x": 220,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b0420c34d88c71b1",
+        "type": "comment",
+        "z": "17e9dc09d599478d",
+        "name": "Control Functions",
+        "info": "",
+        "x": 500,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "7ee3581112321f4c",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "update total",
+        "func": "var channel = msg.payload.channel;\n\nvar topic = \"\"\ntopic += \"UPDATE totals SET count = count + 1 \"\ntopic += \"WHERE channel = \"\ntopic += channel\ntopic += \";\"\n\nmsg.topic = topic;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 460,
+        "wires": [
+            [
+                "98396ae46bc573c4"
+            ]
+        ]
+    },
+    {
+        "id": "a21e0b9b2361bde2",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "delete totals",
+        "func": "\nmsg.topic = \"delete from totals;\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 140,
+        "wires": [
+            [
+                "cd8e4fc03ff29d95",
+                "98396ae46bc573c4"
+            ]
+        ]
+    },
+    {
+        "id": "34bef4247234696d",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload.channel",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "event",
+        "x": 490,
+        "y": 140,
+        "wires": [
+            [
+                "a21e0b9b2361bde2"
+            ]
+        ]
+    },
+    {
+        "id": "1c3ab1ac5e410c20",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "zero totals",
+        "func": "var topic = \"\"\ntopic += \"insert into totals (channel, count) \"\ntopic += \"values \"\ntopic += \"  (1,0), \"\ntopic += \"  (2,0), \"\ntopic += \"  (3,0), \"\ntopic += \"  (4,0), \"\ntopic += \"  (5,0), \"\ntopic += \"  (6,0); \"\n\nmsg.topic = topic\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 180,
+        "wires": [
+            [
+                "98396ae46bc573c4",
+                "cd8e4fc03ff29d95"
+            ]
+        ]
+    },
+    {
+        "id": "6cab048a694315f9",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload.channel",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "event",
+        "x": 490,
+        "y": 180,
+        "wires": [
+            [
+                "1c3ab1ac5e410c20"
+            ]
+        ]
+    }
+]
