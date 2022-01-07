@@ -2,8 +2,8 @@
 
 all: display-events-sdl display-events version version2 sdltest
 
-display-events-sdl: display-events-sdl.c
-	gcc -o $@ $< -lsqlite3
+display-events-sdl: display-events-sdl.c hr_time.c
+	gcc -o $@ $^ -lsqlite3 -lSDL2 -lSDL2_ttf
 
 display-events: display-events.c
 	gcc -o $@ $< -lsqlite3
