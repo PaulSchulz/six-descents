@@ -75,3 +75,6 @@ sqlite events.db < "create table totals(event smallint, count int);"
 ## Latin1 and Latin5
 ## TerminusBold
 ## 16x32
+
+# Crontab - Add crontab file
+# cat config/crontab | crontab -
