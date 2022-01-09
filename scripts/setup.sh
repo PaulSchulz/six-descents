@@ -36,6 +36,14 @@ sudo systemctl enable nodered.service
 
 # node-red admin init
 
+# NodeRED additional package
+#  cd ~/.node-red
+#   npm i --unsafe-perm node-red-node-sqlite
+#
+# If upgrade of NodeRED
+#  cd ~/.node-red
+#  npm rebuild
+
 ##############################################################################
 # Change Console Font
 #
@@ -53,8 +61,7 @@ mkdir -p $DATA
 cd $DATA
 
 # Create database
-sqlite events.db < "create table events(timestamp int, event smallint);"
-sqlite events.db < "create table totals(event smallint, count int);"
+# See notes.org
 
 ##############################################################################
 # Scripts
