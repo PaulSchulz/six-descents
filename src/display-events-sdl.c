@@ -19,7 +19,7 @@
 // #define WIDTH  1024
 // #define HEIGHT  768
 
-// HDML Screen - 
+// HDML Screen -
 // #define WIDTH  1920
 // #define HEIGHT 1080
 
@@ -48,15 +48,15 @@ TTF_Font* Font = NULL;
 sqlite3 *db;
 int channel[6];
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 /* returns a number between 1 and max */
 int Random (int max) {
-  return (rand() % max) + 1;
+    return (rand() % max) + 1;
 }
 
 void LogError (char* msg) {
-  printf("%s\n", msg);
-  errorCount++;
+    printf("%s\n", msg);
+    errorCount++;
 }
 
 /* Sets Window caption according to state - eg in debug mode or showing fps */
@@ -66,14 +66,14 @@ void SetCaption (char* msg) {
 
 /* Initialize all setup, set screen mode, load images etc */
 int InitSetup (void) {
-  
+
   // Database Initialisation
   int rc = sqlite3_open(EVENTSDB, &db);
-    
+
   if (rc != SQLITE_OK) {
     fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
     sqlite3_close(db);
-        
+
     return 1;
   }
 
@@ -99,7 +99,7 @@ int InitSetup (void) {
 
   // Hide Mouse
   SDL_ShowCursor(SDL_DISABLE);
-  
+
   // Opens a font style and sets a size
   Sans = TTF_OpenFont(FONT, 100);
 
@@ -123,14 +123,14 @@ void FinishOff() {
 
   // Close Database
   sqlite3_close(db);
-      
+
   exit(0);
 }
 
 /* read a character */
 char getaChar() {
   int result = -1;
- 
+
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_KEYDOWN)
       {
@@ -140,18 +140,18 @@ char getaChar() {
   }
   return result;
 }
-///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 void DrawString (char* buffer, int x, int y) {
 
-  SDL_Color    White = {255, 255, 255};
+    SDL_Color    White = {255, 255, 255};
   SDL_Surface* surfaceMessage = NULL;
   SDL_Texture* Message = NULL;
   SDL_Rect     Message_rect; //create a rect
 
-  surfaceMessage = TTF_RenderText_Solid(Sans, buffer, White); 
+  surfaceMessage = TTF_RenderText_Solid(Sans, buffer, White);
   Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-  Message_rect.x = x; 
-  Message_rect.y = y; 
+  Message_rect.x = x;
+  Message_rect.y = y;
   Message_rect.w = surfaceMessage->w;
   Message_rect.h = surfaceMessage->h;
   SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
@@ -178,7 +178,7 @@ void DrawScreen () {
 
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderFillRect(renderer, NULL);
-  
+
   // Get Data
   printf("DEBUG: get data\n");
   sqlite3_stmt *res;
@@ -187,23 +187,23 @@ void DrawScreen () {
 			      "SELECT channel, count from totals",
 			      -1, &res, NULL);
 
-  if (rc == SQLITE_OK) {                                                            
+  if (rc == SQLITE_OK) {
     while (sqlite3_step(res) == SQLITE_ROW) {
         channel[sqlite3_column_int(res, 0) - 1] = sqlite3_column_int(res, 1);
     }
-    
+
     data_ok = true;
   }
-  sqlite3_finalize(res); 
+  sqlite3_finalize(res);
   printf("DEBUG: get data(end)\n");
-  
+
   // Display Data
   if (data_ok == true) {
 
     int total = 0;
     for(int i=0; i<6; i++) {
       total = total + channel[i];
-    }       
+    }
 
     char message_buff[100];
     SDL_Color    White = {255, 255, 255};
@@ -216,16 +216,16 @@ void DrawScreen () {
 
     snprintf(message_buff, sizeof(message_buff), "%08d", total);
     DrawString (message_buff, 460, 20);
-    
+
     for (int i=0; i<3; i++) {
-     
+
       snprintf(message_buff, sizeof(message_buff), "%07d", channel[i]);
       DrawString (message_buff, 40, 180 + i*100);
 
       snprintf(message_buff, sizeof(message_buff), "%07d", channel[i+3]);
       DrawString (message_buff, 520, 180 + i*100);
     }
-  
+
     SDL_RenderPresent(renderer);
   }
 }
@@ -237,7 +237,7 @@ void GameLoop() {
   startTimer(&s);
   while (gameRunning) {
     DrawScreen();
-      
+
     while (SDL_PollEvent(&event)) {
       switch (event.type) {
       case SDL_KEYDOWN:
@@ -245,7 +245,7 @@ void GameLoop() {
 	if (keypressed == QUITKEY) {
 	  gameRunning = 0;
 	  break;
-	}	  
+	}
 	break;
       case SDL_QUIT: /* if mouse click to close window */
 	{
@@ -256,7 +256,7 @@ void GameLoop() {
 	break;
       }
       } /* switch */
-      
+
     } /* while SDL_PollEvent */
   }
 }
