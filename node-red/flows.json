@@ -35,7 +35,7 @@
         "payload": "1",
         "payloadType": "num",
         "x": 230,
-        "y": 160,
+        "y": 240,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -64,7 +64,7 @@
         "payload": "1",
         "payloadType": "num",
         "x": 230,
-        "y": 260,
+        "y": 340,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -82,7 +82,7 @@
         "read": false,
         "bcm": true,
         "x": 220,
-        "y": 200,
+        "y": 280,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -97,8 +97,8 @@
         "sqlquery": "msg.topic",
         "sql": "",
         "name": "events.db",
-        "x": 1060,
-        "y": 420,
+        "x": 1140,
+        "y": 440,
         "wires": [
             [
                 "cef1036867c6bc8e"
@@ -110,14 +110,14 @@
         "type": "function",
         "z": "17e9dc09d599478d",
         "name": "query events",
-        "func": "\nmsg.topic = \"select * from events;\"\n\nreturn msg;",
+        "func": "\nmsg.topic = \"select count(*) from events;\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 650,
-        "y": 260,
+        "y": 340,
         "wires": [
             [
                 "98396ae46bc573c4",
@@ -130,7 +130,7 @@
         "type": "debug",
         "z": "17e9dc09d599478d",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -138,8 +138,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1210,
-        "y": 420,
+        "x": 1230,
+        "y": 520,
         "wires": []
     },
     {
@@ -164,7 +164,7 @@
         "onceDelay": 0.1,
         "topic": "event",
         "x": 490,
-        "y": 260,
+        "y": 340,
         "wires": [
             [
                 "161145392fb22144"
@@ -183,10 +183,10 @@
         "finalize": "",
         "libs": [],
         "x": 880,
-        "y": 420,
+        "y": 500,
         "wires": [
             [
-                "98396ae46bc573c4"
+                "6f7e652b0d3a6a66"
             ]
         ]
     },
@@ -204,7 +204,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1050,
-        "y": 100,
+        "y": 180,
         "wires": []
     },
     {
@@ -219,7 +219,7 @@
         "finalize": "",
         "libs": [],
         "x": 650,
-        "y": 300,
+        "y": 380,
         "wires": [
             [
                 "98396ae46bc573c4",
@@ -249,7 +249,7 @@
         "onceDelay": 0.1,
         "topic": "event",
         "x": 490,
-        "y": 300,
+        "y": 380,
         "wires": [
             [
                 "19eef5c594b976bb"
@@ -278,7 +278,7 @@
         "onceDelay": 0.1,
         "topic": "event",
         "x": 490,
-        "y": 340,
+        "y": 420,
         "wires": [
             [
                 "2bafbc5389f8ca35"
@@ -297,7 +297,7 @@
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 340,
+        "y": 420,
         "wires": [
             [
                 "98396ae46bc573c4",
@@ -327,7 +327,7 @@
         "onceDelay": 0.1,
         "topic": "event",
         "x": 490,
-        "y": 100,
+        "y": 180,
         "wires": [
             [
                 "d219bd471bbda27c"
@@ -346,7 +346,7 @@
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 100,
+        "y": 180,
         "wires": [
             [
                 "98396ae46bc573c4",
@@ -365,7 +365,7 @@
         "read": true,
         "bcm": true,
         "x": 220,
-        "y": 300,
+        "y": 380,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -384,7 +384,7 @@
         "finalize": "",
         "libs": [],
         "x": 690,
-        "y": 420,
+        "y": 500,
         "wires": [
             [
                 "7acd52bccd17bf40",
@@ -415,7 +415,7 @@
         "payload": "1",
         "payloadType": "num",
         "x": 220,
-        "y": 360,
+        "y": 440,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -444,7 +444,7 @@
         "payload": "1",
         "payloadType": "num",
         "x": 220,
-        "y": 460,
+        "y": 540,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -473,7 +473,7 @@
         "payload": "1",
         "payloadType": "num",
         "x": 220,
-        "y": 560,
+        "y": 640,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -502,7 +502,7 @@
         "payload": "1",
         "payloadType": "num",
         "x": 220,
-        "y": 660,
+        "y": 740,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -522,7 +522,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 870,
-        "y": 520,
+        "y": 600,
         "wires": []
     },
     {
@@ -536,7 +536,7 @@
         "read": false,
         "bcm": true,
         "x": 210,
-        "y": 400,
+        "y": 480,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -554,7 +554,7 @@
         "read": false,
         "bcm": true,
         "x": 210,
-        "y": 500,
+        "y": 580,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -572,7 +572,7 @@
         "read": false,
         "bcm": true,
         "x": 210,
-        "y": 600,
+        "y": 680,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -590,7 +590,7 @@
         "read": false,
         "bcm": true,
         "x": 210,
-        "y": 700,
+        "y": 780,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -615,7 +615,7 @@
         "repair": false,
         "outputs": 1,
         "x": 500,
-        "y": 420,
+        "y": 500,
         "wires": [
             [
                 "72edc34b21a6ef17"
@@ -629,7 +629,7 @@
         "name": "Input Channels",
         "info": "",
         "x": 220,
-        "y": 100,
+        "y": 180,
         "wires": []
     },
     {
@@ -638,8 +638,8 @@
         "z": "17e9dc09d599478d",
         "name": "Control Functions",
         "info": "",
-        "x": 500,
-        "y": 40,
+        "x": 460,
+        "y": 20,
         "wires": []
     },
     {
@@ -654,10 +654,10 @@
         "finalize": "",
         "libs": [],
         "x": 870,
-        "y": 460,
+        "y": 540,
         "wires": [
             [
-                "98396ae46bc573c4"
+                "6f7e652b0d3a6a66"
             ]
         ]
     },
@@ -673,7 +673,7 @@
         "finalize": "",
         "libs": [],
         "x": 650,
-        "y": 140,
+        "y": 220,
         "wires": [
             [
                 "cd8e4fc03ff29d95",
@@ -703,7 +703,7 @@
         "onceDelay": 0.1,
         "topic": "event",
         "x": 490,
-        "y": 140,
+        "y": 220,
         "wires": [
             [
                 "a21e0b9b2361bde2"
@@ -722,7 +722,7 @@
         "finalize": "",
         "libs": [],
         "x": 650,
-        "y": 180,
+        "y": 260,
         "wires": [
             [
                 "98396ae46bc573c4",
@@ -752,10 +752,130 @@
         "onceDelay": 0.1,
         "topic": "event",
         "x": 490,
-        "y": 180,
+        "y": 260,
         "wires": [
             [
                 "1c3ab1ac5e410c20"
+            ]
+        ]
+    },
+    {
+        "id": "6f7e652b0d3a6a66",
+        "type": "gate",
+        "z": "17e9dc09d599478d",
+        "name": "",
+        "controlTopic": "control",
+        "defaultState": "closed",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "defaultCmd": "default",
+        "statusCmd": "status",
+        "persist": false,
+        "storeName": "memory",
+        "x": 1050,
+        "y": 520,
+        "wires": [
+            [
+                "98396ae46bc573c4"
+            ]
+        ]
+    },
+    {
+        "id": "5786d55df99a9e9f",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "create events table",
+        "func": "var topic = \"\"\n\ntopic = \"create table events \"\ntopic += \"  (timestamp int, \"\ntopic += \"   event smallint); \"\ntopic += \"create table totals \"\ntopic += \"  (event smallint, \"\ntopic += \"   count int); \"\n\nmsg.topic = topic;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 80,
+        "wires": [
+            [
+                "cd8e4fc03ff29d95",
+                "98396ae46bc573c4"
+            ]
+        ]
+    },
+    {
+        "id": "c9e5425aae25b742",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload.channel",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "event",
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "5786d55df99a9e9f"
+            ]
+        ]
+    },
+    {
+        "id": "52b5cead1a817dae",
+        "type": "function",
+        "z": "17e9dc09d599478d",
+        "name": "create totals table",
+        "func": "var topic = \"\"\n\ntopic = \"create table totals \"\ntopic += \"  (event smallint, \"\ntopic += \"   count int); \"\n\nmsg.topic = topic;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 120,
+        "wires": [
+            [
+                "cd8e4fc03ff29d95",
+                "98396ae46bc573c4"
+            ]
+        ]
+    },
+    {
+        "id": "13c57ffcaf398720",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload.channel",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "event",
+        "x": 490,
+        "y": 120,
+        "wires": [
+            [
+                "52b5cead1a817dae"
             ]
         ]
     }
