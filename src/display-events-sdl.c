@@ -21,12 +21,12 @@
 #define QUITKEY SDLK_ESCAPE
 
 // Example default
-#define WIDTH  1024
-#define HEIGHT  768
+// #define WIDTH  1024
+// #define HEIGHT  768
 
 // HDML Screen -
-// #define WIDTH  1920
-// #define HEIGHT 1080
+#define WIDTH  1920
+#define HEIGHT 1080
 
 // Small HDML Screen - will scale output
 // #define WIDTH    960
