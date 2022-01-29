@@ -1,4 +1,9 @@
-// sdltest.c
+// display-events-sdl
+//
+// Quesry the SQLite3 database and display total events.
+//
+// Author: Paul Schulz <paul@mawsonlakes.org>
+
 #include<linux/time.h>
 #define __timespec_defined 1
 #define __timeval_defined 1
