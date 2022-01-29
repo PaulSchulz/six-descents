@@ -55,6 +55,8 @@ sudo apt install -y build-essential
 sudo apt install -y emacs
 sudo apt install -y curl
 
+sudo apt install -y sqlite3
+
 ##############################################################################
 # Copy SSH key to Github
 ## For development
@@ -86,8 +88,9 @@ sudo systemctl enable nodered.service
 
 # NodeRED additional package
 #  cd ~/.node-red
-#   npm i --unsafe-perm node-red-node-sqlite
-#
+#  npm i --unsafe-perm node-red-node-sqlite
+#  npm install node-red-contrib-simple-gate
+
 # If upgrade of NodeRED
 #  cd ~/.node-red
 #  npm rebuild

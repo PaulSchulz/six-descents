@@ -22,3 +22,6 @@
 # 
 # m h  dom mon dow   command
 @reboot cd /home/pi/Documents/git/six-descents && ./src/display-events-sdl
+
+# Run a nightly backup script at 2am.
+0 2 * * *  /home/pi/Documents/git/six-descents/scripts/backup.sh
