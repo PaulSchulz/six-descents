@@ -21,16 +21,16 @@
 #define QUITKEY SDLK_ESCAPE
 
 // Example default
-// #define WIDTH  1024
-// #define HEIGHT  768
+#define WIDTH  1024
+#define HEIGHT  768
 
 // HDML Screen -
 // #define WIDTH  1920
 // #define HEIGHT 1080
 
-// HDML Screen - will scale output
-#define WIDTH    960
-#define HEIGHT   540
+// Small HDML Screen - will scale output
+// #define WIDTH    960
+// #define HEIGHT   540
 
 #define FONT  "fonts/NovaMono-Regular.ttf"
 
@@ -148,7 +148,7 @@ char getaChar() {
 //////////////////////////////////////////////////////////////////////////////
 void DrawString (char* buffer, int x, int y) {
 
-    SDL_Color    White = {255, 255, 255};
+  SDL_Color    White = {255, 255, 255};
   SDL_Surface* surfaceMessage = NULL;
   SDL_Texture* Message = NULL;
   SDL_Rect     Message_rect; //create a rect
@@ -251,12 +251,12 @@ void GameLoop() {
 	}
 	break;
       case SDL_QUIT: /* if mouse click to close window */
-	{
-	  gameRunning = 0;
-	  break;
-	}
+      {
+          gameRunning = 0;
+          break;
+      }
       case SDL_KEYUP: {
-	break;
+          break;
       }
       } /* switch */
 
