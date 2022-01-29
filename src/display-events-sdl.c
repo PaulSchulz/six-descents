@@ -180,53 +180,51 @@ void DrawScreen () {
   SDL_RenderFillRect(renderer, NULL);
 
   // Get Data
-  printf("DEBUG: get data\n");
   sqlite3_stmt *res;
   int data_ok = false;
   int rc = sqlite3_prepare_v2(db,
-			      "SELECT channel, count from totals",
-			      -1, &res, NULL);
+                              "SELECT channel, count from totals",
+                              -1, &res, NULL);
 
   if (rc == SQLITE_OK) {
-    while (sqlite3_step(res) == SQLITE_ROW) {
-        channel[sqlite3_column_int(res, 0) - 1] = sqlite3_column_int(res, 1);
-    }
+      while (sqlite3_step(res) == SQLITE_ROW) {
+          channel[sqlite3_column_int(res, 0) - 1] = sqlite3_column_int(res, 1);
+      }
 
-    data_ok = true;
+      data_ok = true;
   }
   sqlite3_finalize(res);
-  printf("DEBUG: get data(end)\n");
 
   // Display Data
   if (data_ok == true) {
 
-    int total = 0;
-    for(int i=0; i<6; i++) {
-      total = total + channel[i];
-    }
+      int total = 0;
+      for(int i=0; i<6; i++) {
+          total = total + channel[i];
+      }
 
-    char message_buff[100];
-    SDL_Color    White = {255, 255, 255};
-    SDL_Surface* surfaceMessage = NULL;
-    SDL_Texture* Message = NULL;
-    SDL_Rect     Message_rect; //create a rect
+      char message_buff[100];
+      SDL_Color    White = {255, 255, 255};
+      SDL_Surface* surfaceMessage = NULL;
+      SDL_Texture* Message = NULL;
+      SDL_Rect     Message_rect; //create a rect
 
-    snprintf(message_buff, sizeof(message_buff), "%s", "Total:");
-    DrawString (message_buff, 40, 20);
+      snprintf(message_buff, sizeof(message_buff), "%s", "Total:");
+      DrawString (message_buff, 40, 20);
 
-    snprintf(message_buff, sizeof(message_buff), "%08d", total);
-    DrawString (message_buff, 460, 20);
+      snprintf(message_buff, sizeof(message_buff), "%08d", total);
+      DrawString (message_buff, 460, 20);
 
-    for (int i=0; i<3; i++) {
+      for (int i=0; i<3; i++) {
 
-      snprintf(message_buff, sizeof(message_buff), "%07d", channel[i]);
-      DrawString (message_buff, 40, 180 + i*100);
+          snprintf(message_buff, sizeof(message_buff), "%07d", channel[i]);
+          DrawString (message_buff, 40, 180 + i*100);
 
-      snprintf(message_buff, sizeof(message_buff), "%07d", channel[i+3]);
-      DrawString (message_buff, 520, 180 + i*100);
-    }
+          snprintf(message_buff, sizeof(message_buff), "%07d", channel[i+3]);
+          DrawString (message_buff, 520, 180 + i*100);
+      }
 
-    SDL_RenderPresent(renderer);
+      SDL_RenderPresent(renderer);
   }
 }
 
