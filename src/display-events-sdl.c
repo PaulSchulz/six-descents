@@ -20,17 +20,18 @@
 
 #define QUITKEY SDLK_ESCAPE
 
-// Example default
-// #define WIDTH  1024
-// #define HEIGHT  768
-
-// HDML Screen -
-#define WIDTH  1920
-#define HEIGHT 1080
+// HDML TV Screen
+// #define WIDTH  1920
+// #define HEIGHT 1080
 
 // Small HDML Screen - will scale output
 // #define WIDTH    960
 // #define HEIGHT   540
+
+// Installed screen
+#define WIDTH  1024
+#define HEIGHT  600
+
 
 #define FONT  "fonts/NovaMono-Regular.ttf"
 
@@ -107,7 +108,8 @@ int InitSetup (void) {
 
   // Opens a font style and sets a size
   // Sans = TTF_OpenFont(FONT, 100);
-  Sans = TTF_OpenFont(FONT, 200);
+  // Sans = TTF_OpenFont(FONT, 200);
+  Sans = TTF_OpenFont(FONT, 110);
 
   // Initialise count data
   for (int i=0; i<6; i++) {
@@ -217,21 +219,25 @@ void DrawScreen () {
 
       snprintf(message_buff, sizeof(message_buff), "%s", "Total:");
       // DrawString (message_buff, 40, 20);
-      DrawString (message_buff, 80, 40);
+      // DrawString (message_buff, 80, 40);
+      DrawString (message_buff, 40, 20);
 
       snprintf(message_buff, sizeof(message_buff), "%08d", total);
       // DrawString (message_buff, 460, 20);
-      DrawString (message_buff, 920, 40);
+      // DrawString (message_buff, 920, 40);
+      DrawString (message_buff, 480, 20);
 
       for (int i=0; i<3; i++) {
 
           snprintf(message_buff, sizeof(message_buff), "%07d", channel[i]);
           // DrawString (message_buff, 40, 180 + i*100);
-          DrawString (message_buff, 80, 360 + i*200);
+          // DrawString (message_buff, 80, 360 + i*200);
+          DrawString (message_buff, 40, 180 + i*120);
 
           snprintf(message_buff, sizeof(message_buff), "%07d", channel[i+3]);
           // DrawString (message_buff, 520, 180 + i*100);
-          DrawString (message_buff, 1040, 360 + i*200);
+          // DrawString (message_buff, 1040, 360 + i*200);
+          DrawString (message_buff, 540, 180 + i*120);
       }
 
       SDL_RenderPresent(renderer);
