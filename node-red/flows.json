@@ -34,11 +34,11 @@
         "topic": "gpio/5",
         "payload": "1",
         "payloadType": "num",
-        "x": 230,
-        "y": 240,
+        "x": 210,
+        "y": 220,
         "wires": [
             [
-                "8f531d31ed031533"
+                "3e2560afb212cca6"
             ]
         ]
     },
@@ -63,11 +63,11 @@
         "topic": "gpio/6",
         "payload": "1",
         "payloadType": "num",
-        "x": 230,
-        "y": 340,
+        "x": 210,
+        "y": 260,
         "wires": [
             [
-                "8f531d31ed031533"
+                "3e2560afb212cca6"
             ]
         ]
     },
@@ -82,7 +82,7 @@
         "read": false,
         "bcm": true,
         "x": 220,
-        "y": 280,
+        "y": 580,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -97,8 +97,8 @@
         "sqlquery": "msg.topic",
         "sql": "",
         "name": "events.db",
-        "x": 1140,
-        "y": 440,
+        "x": 1220,
+        "y": 460,
         "wires": [
             [
                 "cef1036867c6bc8e"
@@ -138,8 +138,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1230,
-        "y": 520,
+        "x": 1210,
+        "y": 400,
         "wires": []
     },
     {
@@ -182,8 +182,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 880,
-        "y": 500,
+        "x": 900,
+        "y": 580,
         "wires": [
             [
                 "6f7e652b0d3a6a66"
@@ -203,7 +203,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1050,
+        "x": 1210,
         "y": 180,
         "wires": []
     },
@@ -365,7 +365,7 @@
         "read": true,
         "bcm": true,
         "x": 220,
-        "y": 380,
+        "y": 620,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -383,8 +383,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 690,
-        "y": 500,
+        "x": 710,
+        "y": 580,
         "wires": [
             [
                 "7acd52bccd17bf40",
@@ -414,11 +414,11 @@
         "topic": "gpio/13",
         "payload": "1",
         "payloadType": "num",
-        "x": 220,
-        "y": 440,
+        "x": 210,
+        "y": 300,
         "wires": [
             [
-                "8f531d31ed031533"
+                "3e2560afb212cca6"
             ]
         ]
     },
@@ -443,11 +443,11 @@
         "topic": "gpio/19",
         "payload": "1",
         "payloadType": "num",
-        "x": 220,
-        "y": 540,
+        "x": 210,
+        "y": 340,
         "wires": [
             [
-                "8f531d31ed031533"
+                "3e2560afb212cca6"
             ]
         ]
     },
@@ -472,11 +472,11 @@
         "topic": "gpio/26",
         "payload": "1",
         "payloadType": "num",
-        "x": 220,
-        "y": 640,
+        "x": 210,
+        "y": 380,
         "wires": [
             [
-                "8f531d31ed031533"
+                "3e2560afb212cca6"
             ]
         ]
     },
@@ -501,11 +501,11 @@
         "topic": "gpio/12",
         "payload": "1",
         "payloadType": "num",
-        "x": 220,
-        "y": 740,
+        "x": 210,
+        "y": 420,
         "wires": [
             [
-                "8f531d31ed031533"
+                "3e2560afb212cca6"
             ]
         ]
     },
@@ -521,8 +521,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
-        "y": 600,
+        "x": 890,
+        "y": 540,
         "wires": []
     },
     {
@@ -536,7 +536,7 @@
         "read": false,
         "bcm": true,
         "x": 210,
-        "y": 480,
+        "y": 660,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -554,7 +554,7 @@
         "read": false,
         "bcm": true,
         "x": 210,
-        "y": 580,
+        "y": 700,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -572,7 +572,7 @@
         "read": false,
         "bcm": true,
         "x": 210,
-        "y": 680,
+        "y": 740,
         "wires": [
             [
                 "8f531d31ed031533"
@@ -614,8 +614,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 500,
-        "y": 500,
+        "x": 520,
+        "y": 580,
         "wires": [
             [
                 "72edc34b21a6ef17"
@@ -629,7 +629,7 @@
         "name": "Input Channels",
         "info": "",
         "x": 220,
-        "y": 180,
+        "y": 540,
         "wires": []
     },
     {
@@ -653,8 +653,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 870,
-        "y": 540,
+        "x": 890,
+        "y": 620,
         "wires": [
             [
                 "6f7e652b0d3a6a66"
@@ -773,8 +773,8 @@
         "statusCmd": "status",
         "persist": false,
         "storeName": "memory",
-        "x": 1050,
-        "y": 520,
+        "x": 1070,
+        "y": 580,
         "wires": [
             [
                 "98396ae46bc573c4"
@@ -878,5 +878,37 @@
                 "52b5cead1a817dae"
             ]
         ]
+    },
+    {
+        "id": "3e2560afb212cca6",
+        "type": "gate",
+        "z": "17e9dc09d599478d",
+        "name": "",
+        "controlTopic": "control",
+        "defaultState": "closed",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "defaultCmd": "default",
+        "statusCmd": "status",
+        "persist": false,
+        "storeName": "memory",
+        "x": 490,
+        "y": 500,
+        "wires": [
+            [
+                "8f531d31ed031533"
+            ]
+        ]
+    },
+    {
+        "id": "c0b206d47f039931",
+        "type": "comment",
+        "z": "17e9dc09d599478d",
+        "name": "Test Input Channels",
+        "info": "",
+        "x": 210,
+        "y": 180,
+        "wires": []
     }
 ]
