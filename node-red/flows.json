@@ -910,5 +910,63 @@
         "x": 210,
         "y": 180,
         "wires": []
+    },
+    {
+        "id": "b7e3635d5bf06a27",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "Toggle",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Control",
+        "payload": "toggle",
+        "payloadType": "str",
+        "x": 250,
+        "y": 480,
+        "wires": [
+            [
+                "3e2560afb212cca6"
+            ]
+        ]
+    },
+    {
+        "id": "3f1f80e86c2ce84f",
+        "type": "inject",
+        "z": "17e9dc09d599478d",
+        "name": "Toggle",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Control",
+        "payload": "toggle",
+        "payloadType": "str",
+        "x": 910,
+        "y": 500,
+        "wires": [
+            [
+                "6f7e652b0d3a6a66"
+            ]
+        ]
     }
 ]
