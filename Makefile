@@ -1,8 +1,10 @@
+TOPTARGETS := all clean
 SUBDIRS := src
 
-.phony: all $(SUBDIRS)
+.PHONY: $(TOPTARGETS) $(SUBDIRS)
 
-all: $(SUBDIRS)
+$(TOPTARGETS): $(SUBDIRS)
 
 $(SUBDIRS):
-	make -C $@
+	make -C $@ $(MAKECMDGOALS)
+
