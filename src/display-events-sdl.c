@@ -106,7 +106,8 @@ int InitSetup (void) {
   SDL_ShowCursor(SDL_DISABLE);
 
   // Opens a font style and sets a size
-  Sans = TTF_OpenFont(FONT, 100);
+  // Sans = TTF_OpenFont(FONT, 100);
+  Sans = TTF_OpenFont(FONT, 200);
 
   // Initialise count data
   for (int i=0; i<6; i++) {
@@ -215,18 +216,22 @@ void DrawScreen () {
       SDL_Rect     Message_rect; //create a rect
 
       snprintf(message_buff, sizeof(message_buff), "%s", "Total:");
-      DrawString (message_buff, 40, 20);
+      // DrawString (message_buff, 40, 20);
+      DrawString (message_buff, 80, 40);
 
       snprintf(message_buff, sizeof(message_buff), "%08d", total);
-      DrawString (message_buff, 460, 20);
+      // DrawString (message_buff, 460, 20);
+      DrawString (message_buff, 920, 40);
 
       for (int i=0; i<3; i++) {
 
           snprintf(message_buff, sizeof(message_buff), "%07d", channel[i]);
-          DrawString (message_buff, 40, 180 + i*100);
+          // DrawString (message_buff, 40, 180 + i*100);
+          DrawString (message_buff, 80, 360 + i*200);
 
           snprintf(message_buff, sizeof(message_buff), "%07d", channel[i+3]);
-          DrawString (message_buff, 520, 180 + i*100);
+          // DrawString (message_buff, 520, 180 + i*100);
+          DrawString (message_buff, 1040, 360 + i*200);
       }
 
       SDL_RenderPresent(renderer);
