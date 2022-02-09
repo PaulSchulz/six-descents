@@ -17,7 +17,7 @@
         "id": "4953ef8426cad350",
         "type": "inject",
         "z": "17e9dc09d599478d",
-        "name": "channel 1 gpio/5",
+        "name": "channel 1 gpio/13",
         "props": [
             {
                 "p": "payload"
@@ -31,7 +31,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "gpio/5",
+        "topic": "gpio/13",
         "payload": "1",
         "payloadType": "num",
         "x": 210,
@@ -46,7 +46,7 @@
         "id": "ec942d16c3b813fa",
         "type": "inject",
         "z": "17e9dc09d599478d",
-        "name": "channel 2 gpio/6",
+        "name": "channel 2 gpio/19",
         "props": [
             {
                 "p": "payload"
@@ -60,7 +60,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "gpio/6",
+        "topic": "gpio/19",
         "payload": "1",
         "payloadType": "num",
         "x": 210,
@@ -75,13 +75,13 @@
         "id": "395b119d881dc8e0",
         "type": "rpi-gpio in",
         "z": "17e9dc09d599478d",
-        "name": "channel 1 gpio/5",
-        "pin": "5",
+        "name": "channel 1 gpio/13",
+        "pin": "13",
         "intype": "tri",
         "debounce": "25",
         "read": false,
         "bcm": true,
-        "x": 220,
+        "x": 230,
         "y": 580,
         "wires": [
             [
@@ -358,13 +358,13 @@
         "id": "ba7df2792fac42c6",
         "type": "rpi-gpio in",
         "z": "17e9dc09d599478d",
-        "name": "channel 2 gpio/6",
-        "pin": "6",
+        "name": "channel 2 gpio/19",
+        "pin": "19",
         "intype": "tri",
         "debounce": "25",
         "read": true,
         "bcm": true,
-        "x": 220,
+        "x": 230,
         "y": 620,
         "wires": [
             [
@@ -377,7 +377,7 @@
         "type": "function",
         "z": "17e9dc09d599478d",
         "name": "channel map",
-        "func": "var channel = 0;\n\nswitch(msg.topic) {\n  case \"gpio/5\":\n    channel = 1;\n    break;\n  case \"gpio/6\":\n    channel = 2;\n    break;\n  case \"gpio/13\":\n    channel = 3;\n    break;\n  case \"gpio/19\":\n    channel = 4;\n    break;\n  case \"gpio/26\":\n    channel = 5;\n    break;\n  case \"gpio/12\":\n    channel = 6;\n    break;\n  default:\n    // code block\n}\n\nif (channel == 0) {\n    msg = NULL;\n} else {\n  msg.payload = {\"channel\": channel}\n}\n\nreturn msg;",
+        "func": "var channel = 0;\n\nswitch(msg.topic) {\n  case \"gpio/13\":\n    channel = 1;\n    break;\n  case \"gpio/19\":\n    channel = 2;\n    break;\n  case \"gpio/26\":\n    channel = 3;\n    break;\n  case \"gpio/16\":\n    channel = 4;\n    break;\n  case \"gpio/20\":\n    channel = 5;\n    break;\n  case \"gpio/21\":\n    channel = 6;\n    break;\n  default:\n    // code block\n}\n\nif (channel == 0) {\n    msg = NULL;\n} else {\n  msg.payload = {\"channel\": channel}\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -397,7 +397,7 @@
         "id": "efda65f56305041b",
         "type": "inject",
         "z": "17e9dc09d599478d",
-        "name": "channel 3 gpio/13",
+        "name": "channel 3 gpio/26",
         "props": [
             {
                 "p": "payload"
@@ -411,7 +411,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "gpio/13",
+        "topic": "gpio/26",
         "payload": "1",
         "payloadType": "num",
         "x": 210,
@@ -426,7 +426,7 @@
         "id": "065773e0a6137f28",
         "type": "inject",
         "z": "17e9dc09d599478d",
-        "name": "channel 4 gpio/19",
+        "name": "channel 4 gpio/16",
         "props": [
             {
                 "p": "payload"
@@ -440,7 +440,7 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "topic": "gpio/19",
+        "topic": "gpio/16",
         "payload": "1",
         "payloadType": "num",
         "x": 210,
@@ -455,7 +455,7 @@
         "id": "bdad1f82cf2f4568",
         "type": "inject",
         "z": "17e9dc09d599478d",
-        "name": "channel 5 gpio/26",
+        "name": "channel 5 gpio/20",
         "props": [
             {
                 "p": "payload"
@@ -469,7 +469,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "gpio/26",
+        "topic": "gpio/20",
         "payload": "1",
         "payloadType": "num",
         "x": 210,
@@ -484,7 +484,7 @@
         "id": "a7226c763e338a97",
         "type": "inject",
         "z": "17e9dc09d599478d",
-        "name": "channel 6 gpio/12",
+        "name": "channel 6 gpio/21",
         "props": [
             {
                 "p": "payload"
@@ -498,7 +498,7 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "topic": "gpio/12",
+        "topic": "gpio/21",
         "payload": "1",
         "payloadType": "num",
         "x": 210,
@@ -529,8 +529,8 @@
         "id": "e061d6a3e074c0f7",
         "type": "rpi-gpio in",
         "z": "17e9dc09d599478d",
-        "name": "channel 3 gpio/13",
-        "pin": "13",
+        "name": "channel 3 gpio/26",
+        "pin": "26",
         "intype": "tri",
         "debounce": "25",
         "read": false,
@@ -547,8 +547,8 @@
         "id": "0fa600589eee7ec8",
         "type": "rpi-gpio in",
         "z": "17e9dc09d599478d",
-        "name": "channel 4 gpio/19",
-        "pin": "19",
+        "name": "channel 4 gpio/16",
+        "pin": "16",
         "intype": "tri",
         "debounce": "25",
         "read": false,
@@ -565,8 +565,8 @@
         "id": "0fd9d108d2f13ee9",
         "type": "rpi-gpio in",
         "z": "17e9dc09d599478d",
-        "name": "channel 5 gpio/26",
-        "pin": "26",
+        "name": "channel 5 gpio/20",
+        "pin": "20",
         "intype": "tri",
         "debounce": "25",
         "read": false,
@@ -583,8 +583,8 @@
         "id": "b6831c94e9bb6d20",
         "type": "rpi-gpio in",
         "z": "17e9dc09d599478d",
-        "name": "channel 6 gpio/12",
-        "pin": "12",
+        "name": "channel 6 gpio/21",
+        "pin": "21",
         "intype": "tri",
         "debounce": "25",
         "read": false,
