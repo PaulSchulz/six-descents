@@ -1,4 +1,4 @@
-#@/bin/bash
+#!/bin/bash
 
 DB=/home/pi/Documents/git/six-descents-data/events.db
 

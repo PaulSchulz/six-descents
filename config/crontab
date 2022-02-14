@@ -21,7 +21,7 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-@reboot cd /home/pi/Documents/git/six-descents && ./src/display-events-sdl
+@reboot /home/pi/Documents/git/six-descents/scripts/display-start.sh
 
 # Run a nightly backup script at 2am.
 0 2 * * *  /home/pi/Documents/git/six-descents/scripts/backup.sh
